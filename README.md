@@ -3,7 +3,9 @@
 Voir l'éclipse en direct par-dessus ton paysage réel : la page superpose à la caméra du
 téléphone la position calculée du Soleil et de la Lune, recalculée pour ta position GPS.
 
-**→ https://hadriencamus.github.io/noja-eclipse/**
+**→ https://tinyurl.com/eclipse-noja-2026**
+
+(adresse directe : https://hadriencamus.github.io/noja-eclipse/)
 
 ## Ce que fait la page
 
