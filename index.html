@@ -173,7 +173,12 @@ function calibrateFromTap(px,py){
   const tapAz=headingOf(v), d=wrap180(s.az-tapAz);
   if(Math.abs(d)>75){showAlert(`Écart de ${d.toFixed(0)}° : c’est trop pour une erreur de boussole. Vérifie que tu vises bien le Soleil (position calculée : az ${s.az.toFixed(1)}°, hauteur ${s.alt.toFixed(1)}°).`,true);return}
   calibratedAt=nowSec;setHeadingOffset(headingOffset+d);
-  hideAlert();showAlert(`<b>Recalage appliqué : ${d>0?'+':''}${d.toFixed(1)}°.</b> Soleil réel à ${fmtEpoch(nowSec)} : az ${s.az.toFixed(1)}° · hauteur ${s.alt.toFixed(1)}°. Le décalage est mémorisé sur ce téléphone ; refais-le si tu changes de lieu ou si tu passes près d’une masse métallique.`);
+  let note='';
+  if(new Date().getDate()!==ECLIPSE_DAY){
+    const s2=sunAt(mapClockToEclipseDay()),dAz=wrap180(s2.az-s.az),dAlt=s2.alt-s.alt;
+    if(Math.hypot(dAz,dAlt)>.15)note=`<br><br>Répétition avant le jour J : l’overlay vise la position du 12 août, en écart de ${Math.abs(dAz).toFixed(1)}° en azimut et ${Math.abs(dAlt).toFixed(1)}° en hauteur avec le Soleil d’aujourd’hui à la même heure. Ce petit reste de décalage est normal.`;
+  }
+  hideAlert();showAlert(`<b>Recalage appliqué : ${d>0?'+':''}${d.toFixed(1)}°.</b> Soleil réel à ${fmtEpoch(nowSec)} : az ${s.az.toFixed(1)}° · hauteur ${s.alt.toFixed(1)}°. Le décalage est mémorisé sur ce téléphone ; refais-le si tu changes de lieu ou si tu passes près d’une masse métallique.${note}`);
   calibArmed=false;$('aimbox').classList.remove('on');$('calibBtn').classList.remove('armed');$('calibBtn').textContent='🎯 Recaler sur le Soleil';
 }
 
